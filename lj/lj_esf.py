@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from lj.lj_contant import *
 from lj.lj_city import *
+import config.dao
 import re
 
 floor_pattern = re.compile(r'(\d+)[^\d]+')
@@ -53,7 +54,6 @@ def get_esf_data():
                         esf_price['total_price'] = price_info[0].string
                         esf_price['unit_price'] = price_info[2].find(name='span',
                                                                      attrs={'class': 'unitPriceValue'}).contents[0]
-                        esf['price'] = esf_price
                         l = build_pattern.findall(house_info[2].contents[1].string)
                         build_year = 0
                         if l:
@@ -76,7 +76,11 @@ def get_esf_data():
                                 bk, bv = (key, value)
                             esf[bk] = bv
                         print(esf)
+
                     page_num += 1
 
+
+def insert_house(house):
+    pass
 
 get_esf_data()
